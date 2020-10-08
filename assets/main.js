@@ -1,10 +1,3 @@
-// Learn cc.Class:
-//  - https://docs.cocos.com/creator/manual/en/scripting/class.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
-
 cc.Class({
   extends: cc.Component,
 
@@ -13,13 +6,11 @@ cc.Class({
     stateSelection: cc.Node,
   },
 
-  getSelectionBoxScript(node) {
-    return node.getChildByName('selection').getChildByName('box').getComponent('select');
-  },
-
-  start() {
-    const defaultNode = this.getSelectionBoxScript(this.defaultSelection);
-    defaultNode.addOptions([{
+  onLoad() {
+    this.defaultNode = this.defaultSelection.getComponentInChildren('select');
+    this.defaultNode.placeHolder = 'Choose...';
+    this.defaultNode.onSelected = value => console.log('default choose:', value);
+    this.defaultNode.options = [{
       name: '選項一',
       value: 'option1'
     }, {
@@ -31,25 +22,24 @@ cc.Class({
     }, {
       name: '選項四',
       value: 'option4'
-    }]);
-    defaultNode.placeHolder = 'Choose...';
-    defaultNode.onSelected = value => console.log('choose:', value);
+    }];
 
-    let stateNode = this.getSelectionBoxScript(this.stateSelection);
-    stateNode.addOptions([{
+    this.stateNode = this.stateSelection.getComponentInChildren('select');
+    this.stateNode.onSelected = value => console.log('state choose:', value);
+    this.stateNode.defaultValue = 'option2';
+    this.stateNode.options = [{
       name: '選項一',
-      value: 'option1'
+      value: 'option1',
+      disabled: true
     }, {
       name: '選項二',
-      value: 'option2',
-      disabled: true
+      value: 'option2'
     }, {
       name: '選項三',
       value: 'option3'
     }, {
       name: '選項四',
       value: 'option4'
-    }]);
-    stateNode.defaultValue = 'option1';
+    }];
   }
 });

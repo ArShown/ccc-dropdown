@@ -18,17 +18,6 @@ cc.Class({
       }
     },
 
-    // _value: {
-    //   default: null,
-    //   visible: false,
-    // },
-    // value: {
-    //   visible: false,
-    //   set(content) {
-    //     this._value = content;
-    //   }
-    // },
-
     _disabled: {
       default: false,
       visible: false,
@@ -71,10 +60,6 @@ cc.Class({
   },
 
   clickHandler(e) {
-    if (this._disabled) {
-      e.preventDefault();
-      return false;
-    }
     this._callback && this._callback();
   }
 });
